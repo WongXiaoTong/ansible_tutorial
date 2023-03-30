@@ -4,31 +4,16 @@
   become: true
   tasks:
 
-  - name: Install apache2 package
-    apt:
-      name: apache2
+  - name: Install Apache and PHP packages for Ubuntu
+    package:
+      name:
+        - apache2
+        - libapache2-mod-php
       state: latest
-    when: ansible_distribution == "Ubuntu"
 
-  - name: Add php support for apache2
-    apt:
-      name: libapache2-mod-php
+  - name: Install Apache and PHP packages for CentOS
+    package:
+      name:
+        - httpd
+        - php
       state: latest
-    when: ansible_distribution == "Ubuntu"
-
-  - name: Update repository index
-    dnf:
-      update_cache: yes
-    when: ansible_distribution == "CentOS"
-
-  - name: Install apache2 package
-    dnf:
-      name: httpd
-      state: latest
-    when: ansible_distribution == "CentOS"
-
-  - name: Add php support for apache2
-    dnf:
-      name: php
-      state: latest
-    when: ansible_distribution == "CentOS"
